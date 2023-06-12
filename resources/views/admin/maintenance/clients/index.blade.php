@@ -29,7 +29,7 @@
                                 <i class="mdi mdi-settings-outline mr-1"></i> Opciones
                             </button>
                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated">
-                                <a class="dropdown-item" href="{{ route('add.report') }}">Nuevo</a>
+                                <a class="dropdown-item" href="{{ route('add.client') }}">Nuevo</a>
                             </div>
                         </div>
                     </div>
@@ -52,31 +52,29 @@
                             <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead>
                                 <tr>
-                                    <th data-priority="1">#</th>
-                                    <th>Código</th>
-                                    <th>Cotizacion</th>
-                                    <th>Cliente</th>
-                                    <th>Ejecutivo</th>
-                                    <th>Fec. Expedición</th>
-                                    <th>Tipo</th>
-                                    <th>A nombre de</th>
-                                    <th data-priority="2">Opciones</th>
+                                    <th>#</th>
+                                    <th>DOCUMENTO</th>
+                                    <th>CLIENTE</th>
+                                    <th>CONTACTO</th>
+                                    <th>EMAIL</th>
+                                    <th>ESTADO</th>
+                                    <th>CUENTA</th>
+                                    <th data-priority="1">Opciones</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    @isset($reports)
-                                        @foreach ($reports as $key => $report)
+                                    @isset($clients)
+                                        @foreach ($clients as $key => $client)
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
-                                                <td>{{ $report->code }}</td>
-                                                <td>{{ $report->quote_number }}</td>
-                                                <td>{{ $report->client->name }}</td>
-                                                <td>{{ $report->client_executive }}</td>
-                                                <td>{{ $report->expedition }}</td>
-                                                <td>{{ $report->type_report->description }}</td>
-                                                <td>{{ $report->to_name }}</td>
+                                                <td>{{ $client->document }}</td>
+                                                <td>{{ $client->name }}</td>
+                                                <td>{{ $client->contact }}</td>
+                                                <td>{{ $client->email }}</td>
+                                                <td>{{ $client->status }}</td>
+                                                <td>{{ ($client->hasUser() === true) ? 'SI' : 'NO' }}</td>
                                                 <td>
-                                                    @include('admin.reports.delete', $report)
+                                                    @include('admin.maintenance.clients.delete', $client)
                                                 </td>
                                             </tr>        
                                         @endforeach

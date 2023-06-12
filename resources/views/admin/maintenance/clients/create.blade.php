@@ -1,33 +1,6 @@
 @extends('admin.layouts.app')
 
 @section('css')
-    <style>
-        .moveall,
-        .removeall {
-            border: 1px solid #ccc !important;
-
-            &:hover {
-                background: #efefef;
-            }
-        }
-
-        // Only included because button labels aren't showing
-
-        .moveall::after {
-            content: attr(title);
-
-        }
-
-        .removeall::after {
-            content: attr(title);
-        }
-
-        // Custom styling form
-        .form-control option {
-            padding: 10px;
-            border-bottom: 1px solid #efefef;
-        }
-    </style>
 @endsection
 
 @section('content')
@@ -35,10 +8,10 @@
         <div class="container-fluid">
             <div class="row align-items-center">
                 <div class="col-md-8">
-                    <h4 class="page-title mb-1">Editar Informe</h4>
+                    <h4 class="page-title mb-1">Nuevo Cliente</h4>
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="{{ route('all.report') }}">Informes</a></li>
-                        <li class="breadcrumb-item active">Editar Informe</li>
+                        <li class="breadcrumb-item"><a href="{{ route('all.client') }}">Clientes</a></li>
+                        <li class="breadcrumb-item active">Nuevo Cliente</li>
                     </ol>
                 </div>
 
@@ -54,7 +27,10 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        @include('admin.reports.form', ['url' => 'update/report', 'method' => 'POST'])
+                        @include('admin.maintenance.clients.form', [
+                            'url' => 'store/client',
+                            'method' => 'POST',
+                        ])
                     </div>
                 </div>
             </div>
@@ -65,77 +41,29 @@
 @endsection
 
 @section('js')
-    <script
-        src="https://www.virtuosoft.eu/code/bootstrap-duallistbox/bootstrap-duallistbox/v3.0.2/jquery.bootstrap-duallistbox.js">
-    </script>
-    <link rel="stylesheet" type="text/css"
-        href="https://www.virtuosoft.eu/code/bootstrap-duallistbox/bootstrap-duallistbox/v3.0.2/bootstrap-duallistbox.css">
-
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#formReport').validate({
+            $('#formClient').validate({
                 rules: {
-                    code: {
+                    document: {
                         required: true,
                     },
-                    quote_number: {
+                    name: {
                         required: true,
                     },
-                    client_id: {
-                        required: true,
-                    },
-                    client_name: {
-                        required: true,
-                    },
-                    client_executive_id: {
-                        required: true,
-                    },
-                    client_executive: {
-                        required: true,
-                    },
-                    report_manager_id: {
-                        required: true,
-                    },
-                    type_report_id: {
-                        required: true,
-                    },
-                    expedition: {
-                        required: true,
-                    },
-                    to_name: {
+                    identifier: {
                         required: true,
                     },
                 },
                 messages: {
-                    code: {
-                        required: 'Please Enter code',
+                    document: {
+                        required: 'Please Enter document',
                     },
-                    quote_number: {
-                        required: 'Please Select quote number',
+                    name: {
+                        required: 'Please Enter name',
                     },
-                    client_id: {
-                        required: 'Please Enter client id',
-                    },
-                    client_name: {
-                        required: 'Please Enter client',
-                    },
-                    client_executive_id: {
-                        required: 'Please Enter client executive id',
-                    },
-                    client_executive: {
-                        required: 'Please Enter client executive',
-                    },
-                    report_manager_id: {
-                        required: 'Please Select report manager id',
-                    },
-                    type_report_id: {
-                        required: 'Please Select typer report',
-                    },
-                    expedition: {
-                        required: 'Please Enter expedition',
-                    },
-                    to_name: {
-                        required: 'Please Select to name',
+                    identifier: {
+                        required: 'Please Enter identifier',
                     },
                 },
                 errorElement: 'span',
@@ -154,9 +82,9 @@
     </script>
 
     <script type="text/javascript">
-        $("#findQuote").click(function() {
+        $("#findClient").click(function() {
 
-            var nro = $('#quote_number').val();
+            var nro = $('#document').val();
             console.log('nro:::', nro);
 
             if (nro === '') {
@@ -221,19 +149,5 @@
             $('#planta').val('');
             $('#proyecto').val('');
         }
-    </script>
-
-    <script>
-        var demo1 = $('select[name="commitments[]"]').bootstrapDualListbox({
-            nonSelectedListLabel: 'Compromisos registrados',
-            selectedListLabel: 'Compromisos seleccionados',
-            preserveSelectionOnMove: 'moved',
-            moveAllLabel: 'Move all',
-            removeAllLabel: 'Remove all'
-        });
-        $("#demoform").submit(function() {
-            alert($('[name="commitments[]"]').val());
-            return false;
-        });
     </script>
 @endsection

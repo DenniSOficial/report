@@ -27,7 +27,7 @@ return new class extends Migration
             $table->date('notification')->nullable();
             $table->date('shipping')->nullable();
             $table->string('laboratory_report_number')->nullable();
-            $table->integer('created_user_id');
+            $table->integer('created_user_id')->nullable();
             $table->integer('updated_user_id')->nullable();
             $table->foreign('report_manager_id')->references('id')->on('report_managers')->onDelete('cascade');
             $table->foreign('report_status_id')->references('id')->on('report_statuses')->onDelete('cascade');

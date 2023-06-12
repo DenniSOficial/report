@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\NormController;
 use App\Http\Controllers\CommitmentController;
 use App\Http\Controllers\ReportManagerController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ReportController;
 
 /*
@@ -39,6 +40,19 @@ Route::middleware('auth')->group(function () {
     Route::post('/find-cotizacion-ajax', [AdminController::class, 'findCotizacionAjax'])->name('admin.find.cotizacion.ajax');
     
     // ROUTES MAINTENANCE
+    Route::controller(ClientController::class)->group(function() {
+        
+        Route::get('/all/client', 'AllClient')->name('all.client');
+        Route::get('/add/client', 'AddClient')->name('add.client');
+        Route::post('/store/client', 'StoreClient')->name('store.client');
+        Route::get('/edit/client/{id}', 'EditClient')->name('edit.client');
+        Route::post('/update/client', 'UpdateClient')->name('update.client');
+        Route::get('/delete/client/{id}', 'DeleteClient')->name('delete.client');
+        Route::get('/enable-user/client/{id}', 'EnableUserClient')->name('enable-user.client');
+        Route::get('/disable-user/client/{id}', 'DisableUserClient')->name('disable-user.client');
+
+    });
+
     Route::controller(ReportManagerController::class)->group(function() {
         
         Route::get('/all/report-manager', 'AllReportManager')->name('all.report-manager');
@@ -84,6 +98,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/update/report', 'UpdateReport')->name('update.report');
         Route::get('/delete/report/{id}', 'DeleteReport')->name('delete.report');
         Route::post('/import/report', 'ImportReport')->name('import.report');
+
+        Route::get('/report/{id}/document','DocumentReport')->name('document.report');
 
     });
 

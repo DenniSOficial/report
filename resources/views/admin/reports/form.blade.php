@@ -4,10 +4,12 @@
 
         <h4 class="header-title">Registrar informe</h4>
 
+        <input type="hidden" name="{{ isset($report->id) ? $report->id : '' }}" name="id">
+
         <div class="form-group row">
             <label for="example-text-input" class="col-md-2 col-form-label">N° Cotización</label>
             <div class="form-group col-md-3">
-                {{ Form::text('quote_number', isset($report->quote_number) ? $report->quote_number : old('quote_number'), ['class' => 'form-control', 'id' => 'quote_number']) }}
+                {{ Form::text('quote_number', isset($report->quote_number) ? $report->quote_number : old('quote_number'), ['class' => 'form-control', 'id' => 'quote_number', 'style' => 'text-transform: uppercase;']) }}
             </div>
             <div class="col-md-1">
                 <a id="findQuote" class="btn btn-outline-secondary"><i class="fas fa-search"></i></a>
@@ -28,8 +30,8 @@
             <label for="example-email-input" class="col-md-2 col-form-label">Razón Social</label>
             <div class="form-group col-md-10">
                 {{ Form::hidden('client_id', isset($report->client_id) ? $report->IdClient : old('client_id'), ['id' => 'client_id']) }}
-                {{ Form::hidden('client_document', isset($report->client_document) ? $report->client_document : old('client_document'), ['id' => 'client_document']) }}
-                {{ Form::text('client_name', isset($report->client_name) ? $report->client_name : old('client_name'), ['class' => 'form-control', 'id' => 'client_name', 'readonly']) }}
+                {{ Form::hidden('client_document', isset($report->client->document) ? $report->client->document : old('client_document'), ['id' => 'client_document']) }}
+                {{ Form::text('client_name', isset($report->client->name) ? $report->client->name : old('client_name'), ['class' => 'form-control', 'id' => 'client_name', 'readonly']) }}
             </div>
         </div>
 
@@ -48,7 +50,7 @@
                     <option value="">Seleccione</option>
                     @if ($report_managers)
                         @foreach ($report_managers as $manager)
-                            <option value="{{ $manager->id }}">{{ $manager->NombreCompleto() }}</option>    
+                            <option value="{{ $manager->id }}" {{ isset($report->report_manager_id) ? ($manager->id == $report->report_manager_id) ? 'selected' : ''  : ''   }}>{{ $manager->NombreCompleto() }}</option>    
                         @endforeach    
                     @endif
                 </select>
@@ -85,7 +87,7 @@
                     <option value="">Seleccione</option>
                     @if ($companies)
                         @foreach ($companies as $company)
-                            <option value="{{ $company }}" {{ (isset($report->IdReportManager) ? (($report->ToName == $company) ? 'selected' : '') : ( old('company') == $company ? 'selected' : '' )) }}>{{ $company }}</option>    
+                            <option value="{{ $company }}" {{ (isset($report->to_name) ? (($report->to_name == $company) ? 'selected' : '') : ( old('company') == $company ? 'selected' : '' )) }}>{{ $company }}</option>    
                         @endforeach    
                     @endif
                 </select>

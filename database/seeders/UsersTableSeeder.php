@@ -21,6 +21,7 @@ class UsersTableSeeder extends Seeder
                 'name' => 'Omar Landa',
                 'username' => 'olanda',
                 'email' => 'programador@sagperu.com',
+                'decrypt_key' => '47132061',
                 'password' => Hash::make('47132061'),
                 'role' => 'admin',
                 'status' => 'active',

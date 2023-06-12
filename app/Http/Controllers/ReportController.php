@@ -96,4 +96,35 @@ class ReportController extends Controller
 
         return redirect()->route('all.report')->with($notification);
     }
+
+    public function EditReport($id)
+    {
+        $report = Report::findOrFail($id);
+        $report_commitments = [];
+        $commitments = Commitment::where('status', 'active')
+                                    ->orderBy('code')->get();
+        
+        $report_managers = ReportManager::where('status', 'active')
+                                            ->orderBy('lastname')
+                                            ->orderBy('lastname2')
+                                            ->orderBy('name')->get();
+
+        $types = TypeReport::orderBy('description')
+                                ->pluck('description', 'id');
+        
+        $companies = array('QYECO', 'SAG');
+        
+        return view('admin.reports.edit')
+                ->with('report', $report)
+                ->with('report_commitments', $report_commitments)
+                ->with('commitments', $commitments)
+                ->with('report_managers', $report_managers)
+                ->with('types', $types)
+                ->with('companies', $companies);
+    }
+
+    public function DocumentReport($id)
+    {
+        dd($id);
+    }
 }
