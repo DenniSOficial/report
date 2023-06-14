@@ -4,9 +4,14 @@
         <i class="mdi mdi-chevron-down"></i>
     </button>
     <div class="dropdown-menu">
-        <a class="dropdown-item" href="{{ route('edit.report', $report->id) }}">Editar</a>
-        <a class="dropdown-item" href="{{ route('document.report', $report->id) }}">Ver</a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="{{ route('delete.report', $report->id) }}" id="delete">Eliminar</a>
+        @if (Auth::user()->role !== 'user')
+            <a class="dropdown-item" href="{{ route('edit.report', $report->id) }}">Editar</a>
+        @endif
+        <a class="dropdown-item" href="{{ route('commitments.report', $report->id) }}">Ver</a>
+        @if (Auth::user()->role !== 'user')
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{ route('delete.report', $report->id) }}" id="delete">Eliminar</a>
+        @endif
+
     </div>
 </div>

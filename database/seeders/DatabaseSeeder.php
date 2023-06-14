@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ReportManagersTableSeeder::class);
         $this->call(ReportStatusesTableSeeder::class);
         $this->call(TypeReportsTableSeeder::class);
+        $this->call(DocumentStatusesTableSeeder::class);
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

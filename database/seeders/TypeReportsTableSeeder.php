@@ -21,7 +21,15 @@ class TypeReportsTableSeeder extends Seeder
             [
                 'description' => 'INFORME DE MONITOREO AMBIENTAL',
             ],
-
+            [
+                'description' => 'INFORME DE AVANCE/CUMPLIMIENTO AMBIENTAL',
+            ],
+            [
+                'description' => 'INFORME ANUAL DE GESTIÓN AMBIENTAL - ELECTRICIDAD',
+            ],
+            [
+                'description' => 'INFORME ANUAL DE GESTIÓN AMBIENTAL - HIDROCARBUROS',
+            ],
         ]);
     }
 }

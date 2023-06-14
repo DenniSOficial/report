@@ -81,6 +81,46 @@
                     </ul>
                 </li>
 
+                @if (Auth::user()->role === 'admin')
+                
+                <li class="menu-title">Administración</li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <div class="d-inline-block icons-sm mr-1"><i class="uim uim-at"></i></div>
+                        <span>Usuarios</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('all.user') }}">Listado de Usuarios</a></li>
+                        @if (Auth::user()->role !== 'user')
+                            <li><a href="{{ route('add.user') }}">Agregar Usuario</a></li>
+                        @endif
+                    </ul>
+                </li>
+
+                @endif
+                
+                <li class="menu-title">Configuración</li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <div class="d-inline-block icons-sm mr-1"><i class="uim uim-at"></i></div>
+                        <span>Configuración</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('admin.change-password') }}">Cambiar Contraseña</a></li>
+                    </ul>
+                </li>
+
+                {{-- <li class="menu-title">Docs</li>
+
+                <li>
+                    <a href="#" class="waves-effect">
+                        <div class="d-inline-block icons-sm mr-1"><i class="uim uim-align-justify"></i></div>
+                        <span>Manual de Usuario</span>
+                    </a>
+                </li> --}}
+
             </ul>
 
         </div>

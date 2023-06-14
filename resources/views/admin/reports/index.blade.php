@@ -22,6 +22,7 @@
                     <li class="breadcrumb-item active">{{ $title }}</li>
                     </ol>
                 </div>
+                @if (Auth::user()->role !== 'user')
                 <div class="col-md-4">
                     <div class="float-right d-none d-md-block">
                         <div class="dropdown">
@@ -33,7 +34,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>    
+                @endif
             </div>
         </div>
     </div>

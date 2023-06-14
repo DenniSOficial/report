@@ -34,6 +34,23 @@ class ClientController extends Controller
             'name' => 'required',
             'identifier' => 'required',
         ]);
+
+        Client::insert([
+            'document' => $request->document,
+            'identifier' => $request->identifier,
+            'name' => $request->name,
+            'contact' => strtoupper($request->contact),
+            'email' => strtoupper($request->email),
+            'created_user_id' => Auth::user()->id,
+            'created_at' => Carbon::now()
+        ]);
+
+        $notification = array(
+            'message' => 'Cliente actualizado satisfactoriamente.',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('all.client')->with($notification);
     }
 
     public function EditClient($id)

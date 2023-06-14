@@ -92,14 +92,14 @@
                 Swal.fire({
                     icon: 'error',
                     title: 'Sistemas Análiticos Generales',
-                    text: 'Debe de ingresar el N° de cotización.',
+                    text: 'Debe de ingresar el N° documento.',
                 });
                 return;
             }
 
             limpiarControles();
 
-            var url_ = $('.urlBuscarCotizacion').data('url');
+            var url_ = $('.urlBuscarCliente').data('url');
             console.log('url_:::', url_);
             var data_ = {
                 nro: nro
@@ -117,12 +117,12 @@
                     console.log('response:::', response);
                     if (response.message == 'Ok') {
                         var cliente = response.data['cliente'];
-                        var contactos = response.data['contactos'];
-                        $('#client_id').val(cliente.nIdCliente);
-                        $('#client_document').val(cliente.cDoc);
-                        $('#client_name').val(cliente.cNombreClie);
-                        $('#client_executive').val(cliente.EjecutivoComercial);
-                        $('#client_executive_id').val(cliente.codvend);
+                        //var contactos = response.data['contactos'];
+                        $('#identifier').val(cliente.nIdCliente);
+                        //$('#client_document').val(cliente.cDoc);
+                        $('#name').val(cliente.cNombreClie);
+                        //$('#client_executive').val(cliente.EjecutivoComercial);
+                        //$('#client_executive_id').val(cliente.codvend);
                     } else {
                         Swal.fire({
                             icon: 'error',

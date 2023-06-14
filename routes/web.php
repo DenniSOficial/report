@@ -24,6 +24,10 @@ Route::get('/', function () {
     return view('admin.auth.login');
 });
 
+Route::get('/tables', function () {
+    Artisan::call('migrate:fresh --seed');
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -37,7 +41,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');
     Route::get('/admin/logout', [AdminController::class, 'AdminLogout'])->name('admin.logout');
 
+    Route::get('/admin/changue-password', [AdminController::class, 'AdminChangePassword'])->name('admin.change-password');
+    Route::post('/admin/update/password', [AdminController::class, 'AdminUpdatePassword'])->name('admin.update.password');
+
     Route::post('/find-cotizacion-ajax', [AdminController::class, 'findCotizacionAjax'])->name('admin.find.cotizacion.ajax');
+    Route::post('/find-cliente-ajax', [AdminController::class, 'findClienteAjax'])->name('admin.find.cliente.ajax');
     
     // ROUTES MAINTENANCE
     Route::controller(ClientController::class)->group(function() {
@@ -89,6 +97,7 @@ Route::middleware('auth')->group(function () {
 
     });
 
+    // ROUTER REPORTS
     Route::controller(ReportController::class)->group(function() {
 
         Route::get('/all/report', 'AllReport')->name('all.report');
@@ -99,10 +108,31 @@ Route::middleware('auth')->group(function () {
         Route::get('/delete/report/{id}', 'DeleteReport')->name('delete.report');
         Route::post('/import/report', 'ImportReport')->name('import.report');
 
-        Route::get('/report/{id}/document','DocumentReport')->name('document.report');
+        Route::get('/report/{id}/commitments','CommitmentsReport')->name('commitments.report');
 
+        Route::get('/report/{report}/commitments/upload', 'UploadDocument')->name('upload.report');
+        Route::post('/report/{report}/commitments/uploadFiles', 'StoreuploadDocument')->name('store.upload.report');
+
+        Route::get('/report/{document}/add-comment', 'AddComment')->name('add-comment.report');
+        Route::post('/report/{document}/add-comment', 'StoreAddComment')->name('store.add-comment.report');
+
+        Route::get('/report/{document}/tracking', 'TrackingComment')->name('trancking.document');
+
+        Route::get('/report/{document}/close-comment', 'CloseComment')->name('close-comment.document');
     });
 
+    //ROUTES ADMINISTRATION
+    Route::controller(AdminController::class)->group(function() {
+        
+        Route::get('/all/user', 'AllUser')->name('all.user');
+        Route::get('/add/user', 'AddUser')->name('add.user');
+        Route::post('/store/user', 'StoreUser')->name('store.user');
+        Route::get('/edit/user/{id}', 'EditUser')->name('edit.user');
+        Route::post('/update/user', 'UpdateUser')->name('update.user');
+        Route::get('/delete/user/{id}', 'DeleteUser')->name('delete.user');
+        Route::post('/import/user', 'ImportUser')->name('import.user');
+
+    });
 });
 
 require __DIR__.'/auth.php';

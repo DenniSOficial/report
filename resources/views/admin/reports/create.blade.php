@@ -78,19 +78,10 @@
                     code: {
                         required: true,
                     },
-                    quote_number: {
-                        required: true,
-                    },
                     client_id: {
                         required: true,
                     },
                     client_name: {
-                        required: true,
-                    },
-                    client_executive_id: {
-                        required: true,
-                    },
-                    client_executive: {
                         required: true,
                     },
                     report_manager_id: {
@@ -110,20 +101,11 @@
                     code: {
                         required: 'Please Enter code',
                     },
-                    quote_number: {
-                        required: 'Please Select quote number',
-                    },
                     client_id: {
                         required: 'Please Enter client id',
                     },
                     client_name: {
                         required: 'Please Enter client',
-                    },
-                    client_executive_id: {
-                        required: 'Please Enter client executive id',
-                    },
-                    client_executive: {
-                        required: 'Please Enter client executive',
                     },
                     report_manager_id: {
                         required: 'Please Select report manager id',
@@ -195,6 +177,56 @@
                         $('#client_name').val(cliente.cNombreClie);
                         $('#client_executive').val(cliente.EjecutivoComercial);
                         $('#client_executive_id').val(cliente.codvend);
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Sistemas Análiticos Generales',
+                            text: response.message
+                        });
+                    }
+                },
+                error: function(err) {
+                    console.log('err:::', err);
+                }
+            });
+
+        });
+
+        $("#findClient").click(function() {
+
+            var nro = $('#client_document').val();
+            console.log('nro:::', nro);
+
+            if (nro === '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Sistemas Análiticos Generales',
+                    text: 'Debe de ingresar el N° de documento del cliente.',
+                });
+                return;
+            }
+
+            var url_ = $('.urlBuscarCliente').data('url');
+            console.log('url_:::', url_);
+            var data_ = {
+                nro: nro
+            };
+
+            $.ajax({
+                url: url_,
+                type: 'POST',
+                headers: {
+                    'X-CSRF-Token': $("input[name=_token]").val()
+                },
+                dataType: 'json',
+                data: data_,
+                success: function(response) {
+                    console.log('response:::', response);
+                    if (response.message == 'Ok') {
+                        var cliente = response.data['cliente'];
+                        $('#client_id').val(cliente.nIdCliente);
+                        //$('#client_document').val(cliente.cDoc);
+                        $('#client_name').val(cliente.cNombreClie);
                     } else {
                         Swal.fire({
                             icon: 'error',

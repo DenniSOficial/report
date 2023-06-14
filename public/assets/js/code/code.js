@@ -72,4 +72,28 @@ $(function () {
         });
     });
 
+    $(document).on("click", "#close_comment", function (e) {
+        e.preventDefault();
+        var link = $(this).attr("href");
+
+        Swal.fire({
+            title: "Cerrar Comentario",
+            text: "¿Desea cerrar los comentarios?",
+            icon: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, Cerrar!!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = link;
+                Swal.fire(
+                    "Cerrado!",
+                    "Los comentarios han sido revisados.",
+                    "success"
+                );
+            }
+        });
+    });
+
 });

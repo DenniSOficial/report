@@ -1,15 +1,15 @@
-{{ Form::open(['url' => $url, 'method' => $method, 'id' => 'formClient']) }}
+{{ Form::open(['url' => $url, 'method' => $method, 'id' => 'formClient', 'autocomplete' => 'off']) }}
 <div class="card-body">
 
     <h4 class="header-title">Registrar Cliente</h4>
 
     <div class="form-group row">
         <input type="hidden" name="id" value="{{ isset($client->id) ? $client->id : null }}">
-        <input type="hidden" name="identifier" value="{{ isset($client->identifier) ? $client->identifier : null }}">
+        <input type="hidden" id="identifier" name="identifier" value="{{ isset($client->identifier) ? $client->identifier : null }}">
 
         <label for="document" class="col-md-2 col-form-label">Documento</label>
         <div class="form-group col-md-4">
-            {{ Form::text('document', isset($client->document) ? $client->document : old('document'), ['class' => 'form-control',  isset($client) ? 'readonly' : ''  ]) }}
+            {{ Form::text('document', isset($client->document) ? $client->document : old('document'), ['class' => 'form-control',  isset($client) ? 'readonly' : '', 'id' => 'document'  ]) }}
         </div>
         @if(!isset($client))
             <div class="col-md-1">
@@ -21,7 +21,7 @@
     <div class="form-group row">
         <label for="name" class="col-md-2 col-form-label">Razon Social</label>
         <div class="form-group col-md-10">
-            {{ Form::text('name', isset($client->name) ? $client->name : '', ['class' => 'form-control', 'readonly']) }}
+            {{ Form::text('name', isset($client->name) ? $client->name : '', ['class' => 'form-control', 'readonly', 'id' => 'name']) }}
         </div>
     </div>
 
@@ -47,3 +47,5 @@
     </div>
 </div>
 {{ Form::close() }}
+
+<span class="urlBuscarCliente d-none" data-url="{{ route('admin.find.cliente.ajax') }}"></span>

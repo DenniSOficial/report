@@ -4,33 +4,51 @@
 
         <h4 class="header-title">Registrar informe</h4>
 
-        <input type="hidden" name="{{ isset($report->id) ? $report->id : '' }}" name="id">
+        <input type="hidden" value="{{ isset($report->id) ? $report->id : '' }}" name="id">
 
         <div class="form-group row">
             <label for="example-text-input" class="col-md-2 col-form-label">N° Cotización</label>
             <div class="form-group col-md-3">
-                {{ Form::text('quote_number', isset($report->quote_number) ? $report->quote_number : old('quote_number'), ['class' => 'form-control', 'id' => 'quote_number', 'style' => 'text-transform: uppercase;']) }}
+                {{ Form::text('quote_number', isset($report->quote_number) ? $report->quote_number : old('quote_number'), ['class' => 'form-control', 'id' => 'quote_number', 'style' => 'text-transform: uppercase;', ( (!isset($report)) ? '' : 'readonly' ) ]) }}
             </div>
+            
             <div class="col-md-1">
-                <a id="findQuote" class="btn btn-outline-secondary"><i class="fas fa-search"></i></a>
+                @if (!isset($report))
+                    <a id="findQuote" class="btn btn-outline-secondary"><i class="fas fa-search"></i></a>
+                @endif
             </div>
 
-            <label for="example-text-input" class="col-md-1 col-form-label">Informe Lab.</label>
-            <div class="form-group col-md-2">
+            <label for="example-text-input" class="col-md-2 col-form-label">Doc. Cliente</label>
+            <div class="form-group col-md-3">
+                {{ Form::text('client_document', isset($report->client_document) ? $report->client_document : old('client_document'), ['class' => 'form-control', 'id' => 'client_document', 'style' => 'text-transform: uppercase;', ( (!isset($report)) ? '' : 'readonly' ) ]) }}
+            </div>
+            
+            <div class="col-md-1">
+                @if (!isset($report))
+                    <a id="findClient" class="btn btn-outline-secondary"><i class="fas fa-search"></i></a>
+                @endif
+            </div>
+        </div>
+
+        <div class="form-group row">
+
+            <label for="example-text-input" class="col-md-2 col-form-label">Código</label>
+            <div class="form-group col-md-4">
+                {{ Form::text('code', isset($report->code) ? $report->code : old('code'), ['class' => 'form-control', 'id' => 'code']) }}
+            </div>
+
+            <label for="example-text-input" class="col-md-2 col-form-label">Informe Lab.</label>
+            <div class="form-group col-md-4">
                 {{ Form::text('laboratory_report_number', isset($report->laboratory_report_number) ? $report->laboratory_report_number : old('laboratory_report_number'), ['class' => 'form-control', 'id' => 'laboratory']) }}
             </div>
 
-            <label for="example-text-input" class="col-md-1 col-form-label">Código</label>
-            <div class="form-group col-md-2">
-                {{ Form::text('code', isset($report->code) ? $report->code : old('code'), ['class' => 'form-control', 'id' => 'code']) }}
-            </div>
         </div>
 
         <div class="form-group row">
             <label for="example-email-input" class="col-md-2 col-form-label">Razón Social</label>
             <div class="form-group col-md-10">
                 {{ Form::hidden('client_id', isset($report->client_id) ? $report->IdClient : old('client_id'), ['id' => 'client_id']) }}
-                {{ Form::hidden('client_document', isset($report->client->document) ? $report->client->document : old('client_document'), ['id' => 'client_document']) }}
+                {{-- {{ Form::hidden('client_document', isset($report->client->document) ? $report->client->document : old('client_document'), ['id' => 'client_document']) }} --}}
                 {{ Form::text('client_name', isset($report->client->name) ? $report->client->name : old('client_name'), ['class' => 'form-control', 'id' => 'client_name', 'readonly']) }}
             </div>
         </div>
@@ -103,9 +121,9 @@
                 <select multiple="multiple" size="10" name="commitments[]" title="duallistbox_demo1[]">
                     @if (isset($commitments))
                         @foreach ($commitments as $commitment)
-                            {!!  $found_key = array_search($commitment->IdCommitment, array_column($report_commitments, 'IdCommitment')) !!}
-                            <option value="{{ $commitment->IdCommitment }}" {{ count($report_commitments) > 0 ? ( $found_key !== false ? 'selected' : '' ) : '' }} >
-                                {{ $commitment->CodeCommitment . ' - ' . $commitment->Summary }}
+                            {!!  $found_key = array_search($commitment->id, array_column($report_commitments, 'commitment_id')) !!}
+                            <option value="{{ $commitment->id }}" {{ count($report_commitments) > 0 ? ( $found_key !== false ? 'selected' : '' ) : '' }} >
+                                {{ $commitment->code . ' - ' . $commitment->summary }}
                             </option>
                         @endforeach
                     @endif
@@ -125,3 +143,4 @@
 {{ Form::close() }}
 
 <span class="urlBuscarCotizacion d-none" data-url="{{ route('admin.find.cotizacion.ajax') }}"></span>
+<span class="urlBuscarCliente d-none" data-url="{{ route('admin.find.cliente.ajax') }}"></span>

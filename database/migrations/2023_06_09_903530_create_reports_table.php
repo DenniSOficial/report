@@ -19,9 +19,9 @@ return new class extends Migration
             $table->unsignedBigInteger('client_id');
             $table->string('code');
             $table->enum('status', ['active', 'inactive'])->default('active');
-            $table->string('client_executive_id');
-            $table->string('client_executive');
-            $table->string('quote_number');
+            $table->string('client_executive_id')->nullable();
+            $table->string('client_executive')->nullable();
+            $table->string('quote_number')->nullable();
             $table->string('to_name');
             $table->date('expedition');
             $table->date('notification')->nullable();

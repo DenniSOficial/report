@@ -64,9 +64,9 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
                     <!-- item-->
-                    <a class="dropdown-item" href="#"><i class="mdi mdi-face-profile font-size-16 align-middle mr-1"></i> Profile</a>
+                    <a class="dropdown-item" href="{{ route('admin.change-password') }}"><i class="mdi mdi-face-profile font-size-16 align-middle mr-1"></i> Cambiar Contraseña</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ route('admin.logout') }}"><i class="mdi mdi-logout font-size-16 align-middle mr-1"></i> Logout</a>
+                    <a class="dropdown-item" href="{{ route('admin.logout') }}"><i class="mdi mdi-logout font-size-16 align-middle mr-1"></i> Salir</a>
                 </div>
             </div>
             
